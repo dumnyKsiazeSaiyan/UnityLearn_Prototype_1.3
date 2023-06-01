@@ -4,30 +4,30 @@ using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {
-    public GameObject player;
-    private Vector3 startPosition;
-    public Camera mainCamera;
+    private GameObject player;
+
     private Vector3 playerPosition;
     private Vector3 offset;
 
 
     private void Start()
     {
+        if (gameObject.name == "Main Camera")
+            player = GameObject.Find("Vehicle");
+        
+        else if (gameObject.name == "Player2 Main Camera")
+            player = GameObject.Find("Player2");
 
-        player = GameObject.Find("Vehicle");
-        mainCamera = GetComponent<Camera>();
-        startPosition = transform.position;
-        offset = startPosition - playerPosition;
+        else
+            Debug.Log("Nieznaleziono gracza");
+
+        playerPosition = player.transform.position;
+        offset = transform.position - playerPosition;
     }
 
     private void Update()
     {
         playerPosition = player.transform.position;
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            mainCamera.enabled = !mainCamera.enabled;
-        }
     }
 
     private void LateUpdate()
